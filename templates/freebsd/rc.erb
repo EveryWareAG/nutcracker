@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# PROVIDES: nutcracker
+# REQUIRE: DAEMON
+# BEFORE: login
+
+. /etc/rc.subr
+
+name=nutcracker
+rcvar=nutcracker_enable
+
+command="/usr/local/bin/${name}"
+command_args="-d -c <%= node[:nutcracker][:conf_file] %> -p <%= node[:nutcracker][:pid_file] %><%= @command_args %>"
+
+pidfile="<%= node[:nutcracker][:pid_file] %>"
+
+required_files="<%= node[:nutcracker][:conf_file] %>"
+
+load_rc_config $name
+run_rc_command "$1"
